@@ -1,0 +1,6 @@
+#!/usr/bin/perl
+
+my $port = 25565;
+
+system ("mvn clean install");
+
