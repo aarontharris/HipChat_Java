@@ -8,7 +8,7 @@ public class HandshakeDelegate extends BaseConnectionDelegate {
 
 	@Override
 	protected void onReceivedMsg(String msg) throws Exception {
-		logDebugMessageWithNewlineChars(msg); // log the incoming request for fun
+		Log.debugNewlineChars(msg); // log the incoming request for fun
 		if (msg.contains("postman: debug") ||
 				msg.contains("POST / HTTP")
 				&& msg.contains("User-Agent: HipChat.com")

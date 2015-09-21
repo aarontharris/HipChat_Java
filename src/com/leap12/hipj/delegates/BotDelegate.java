@@ -1,5 +1,7 @@
 package com.leap12.hipj.delegates;
 
+import com.leap12.common.HttpResponse;
+import com.leap12.common.HttpResponse.HttpStatusCode;
 import com.leap12.common.Log;
 import com.leap12.databuddy.BaseConnectionDelegate;
 import com.leap12.hipj.data.HDao;
@@ -19,14 +21,24 @@ public class BotDelegate extends BaseConnectionDelegate {
 
 		String output = "{\"color\": \"green\",\"message\": \"Hello!\", \"message_format\": \"text\", \"notify\": false }";
 
-		// writeMsg("application/json");
-		writeMsg("HTTP/1.1 200 OK\r\n");
-		writeMsg("Server: DataBuddy/1.1\r\n");
-		writeMsg("Content-Type: application/json;charset=ISO-8859-1\r\n");
-		writeMsg(String.format("Content-Length: %s\r\n", output.length()));
-		// < Date: Mon, 21 Sep 2015 01:39:05 GMT
-		writeMsg("\r\n");
+		HttpResponse resp = new HttpResponse();
+		resp.setStatusCode(HttpStatusCode.CODE_200);
+		resp.addHeader("Content-Type", "application/json;charset=ISO-8859-1");
+		resp.setBody(output);
 
-		writeMsg(output);
+		Log.debugNewlineChars(resp.toString());
+
+		writeMsg(resp.toString());
+
+
+		// writeMsg("application/json");
+		// writeMsg("HTTP/1.1 200 OK\r\n");
+		// writeMsg("Server: DataBuddy/1.1\r\n");
+		// writeMsg("Content-Type: application/json;charset=ISO-8859-1\r\n");
+		// writeMsg(String.format("Content-Length: %s\r\n", output.length()));
+		// < Date: Mon, 21 Sep 2015 01:39:05 GMT
+		// writeMsg("\r\n");
+
+		// writeMsg(output);
 	}
 }
