@@ -12,7 +12,7 @@ import com.leap12.hipj.data.HipChatRecv;
 import com.leap12.hipj.handlers.HipCmd;
 import com.leap12.hipj.handlers.HipCmd.HipCmdRelevanceComparator;
 import com.leap12.hipj.handlers.HipGoogleCmd;
-import com.leap12.hipj.handlers.HipSendMailCmd;
+import com.leap12.hipj.handlers.XHipSendMailCmd;
 import com.leap12.hipj.handlers.HipTimeCmd;
 
 public class BotDelegate extends BaseConnectionDelegate {
@@ -20,7 +20,7 @@ public class BotDelegate extends BaseConnectionDelegate {
 			new HipTimeCmd(),
 			new HipCmd(),
 			new HipGoogleCmd(),
-			new HipSendMailCmd()
+			new XHipSendMailCmd()
 	};
 
 	@Override

@@ -13,11 +13,11 @@ import com.leap12.databuddy.Commands.RequestStatus;
 import com.leap12.hipj.data.HipChatRecv;
 import com.leap12.hipj.data.HipChatResp;
 
-public class HipSendMailCmd extends HipCmd {
-	private static final String patternString = "sendmail \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"";
-	private static final String help = "\"subject\" \"body\" \"from\" \"to,to,to\"";
+public class XHipSendMailCmd extends HipCmd {
+	private static final String patternString = "sendmail \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"";
+	private static final String help = "\"subject\" \"body\" \"to,to,to\"";
 
-	public HipSendMailCmd() {
+	public XHipSendMailCmd() {
 		super();
 	}
 
@@ -31,9 +31,8 @@ public class HipSendMailCmd extends HipCmd {
 			if (m.find()) {
 				String subject = m.group(1);
 				String body = m.group(2);
-				String from = m.group(3);
 				List<String> to = new ArrayList<>();
-				String recipients = m.group(4);
+				String recipients = m.group(3);
 
 				if (recipients.endsWith(",")) {
 					recipients.substring(0, recipients.length() - 1);
@@ -44,7 +43,7 @@ public class HipSendMailCmd extends HipCmd {
 					to.add(recipients);
 				}
 
-				SendMail sendMail = new SendMail("aarontharris@gmail.com", "iLoveNikon1", from);
+				SendMail sendMail = new SendMail("hipchat.computer@gmail.com", "");
 				sendMail.setSubject(subject);
 				sendMail.setBody(body);
 				sendMail.setRecipients(to);
@@ -84,9 +83,5 @@ public class HipSendMailCmd extends HipCmd {
 			return 0.11f;
 		}
 		return 0f;
-	}
-
-	public static void main(String args[]) {
-
 	}
 }
