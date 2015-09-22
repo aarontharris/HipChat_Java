@@ -6,18 +6,21 @@ import java.util.Collections;
 import java.util.List;
 import com.leap12.common.Log;
 import com.leap12.databuddy.BaseConnectionDelegate;
+import com.leap12.databuddy.Commands.CmdResponse;
 import com.leap12.hipj.data.HDao;
 import com.leap12.hipj.data.HipChatRecv;
 import com.leap12.hipj.handlers.HipCmd;
 import com.leap12.hipj.handlers.HipCmd.HipCmdRelevanceComparator;
 import com.leap12.hipj.handlers.HipGoogleCmd;
+import com.leap12.hipj.handlers.HipSendMailCmd;
 import com.leap12.hipj.handlers.HipTimeCmd;
 
 public class BotDelegate extends BaseConnectionDelegate {
 	private static final HipCmd[] commands = new HipCmd[] {
 			new HipTimeCmd(),
 			new HipCmd(),
-			new HipGoogleCmd()
+			new HipGoogleCmd(),
+			new HipSendMailCmd()
 	};
 
 	@Override
@@ -33,6 +36,7 @@ public class BotDelegate extends BaseConnectionDelegate {
 		for (HipCmd cmd : cmds) {
 			Log.d("%s = %s", cmd.getClass().getSimpleName(), cmd.isCommand(recv));
 		}
-		cmds.get(0).executeCommand(this, recv);
+
+		CmdResponse<Void> result = cmds.get(0).executeCommand(this, recv); // FIXME should I deal with error result or let the cmd do it? hmmmm...
 	}
 }
