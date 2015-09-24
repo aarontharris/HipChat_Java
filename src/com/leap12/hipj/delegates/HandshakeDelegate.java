@@ -7,19 +7,19 @@ import com.leap12.databuddy.BaseConnectionDelegate;
 public class HandshakeDelegate extends BaseConnectionDelegate {
 
 	@Override
-	protected void onReceivedMsg(String msg) throws Exception {
-		Log.debugNewlineChars(msg); // log the incoming request for fun
-		if (msg.contains("postman: debug") ||
-				msg.contains("POST / HTTP")
-				&& msg.contains("User-Agent: HipChat.com")
-				&& msg.contains("Content-Type: application/json")) {
-			Log.d("valid request");
+	protected void onReceivedMsg( String msg ) throws Exception {
+		Log.debugNewlineChars( msg ); // log the incoming request for fun
+		if ( msg.contains( "postman: debug" ) ||
+				msg.contains( "POST / HTTP" )
+				&& msg.contains( "User-Agent: HipChat.com" )
+				&& msg.contains( "Content-Type: application/json" ) ) {
+			Log.d( "valid request" );
 			BotDelegate delegate = new BotDelegate();
-			getClientConnection().setDelegate(delegate); // hand control over to the new delegate for future messages
-			delegate.onReceivedMsg(msg); // let the delegate handle this message too
+			getClientConnection().setDelegate( delegate ); // hand control over to the new delegate for future messages
+			delegate.onReceivedMsg( msg ); // let the delegate handle this message too
 		} else {
-			Log.d("invalid request");
-			writeMsg("invalid");
+			Log.d( "invalid request" );
+			writeMsg( "invalid" );
 		}
 	}
 

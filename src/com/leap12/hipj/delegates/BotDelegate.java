@@ -24,19 +24,19 @@ public class BotDelegate extends BaseConnectionDelegate {
 	};
 
 	@Override
-	protected void onReceivedMsg(String msg) throws Exception {
-		String parts[] = msg.split("\r\n\r\n", 2);
+	protected void onReceivedMsg( String msg ) throws Exception {
+		String parts[] = msg.split( "\r\n\r\n", 2 );
 		String jsonPostData = parts[1];
 
 		HDao hdao = new HDao();
-		HipChatRecv recv = hdao.toHipChatRecv(jsonPostData);
+		HipChatRecv recv = hdao.toHipChatRecv( jsonPostData );
 
-		List<HipCmd> cmds = new ArrayList<>(Arrays.asList(commands));
-		Collections.sort(cmds, new HipCmdRelevanceComparator(recv));
-		for (HipCmd cmd : cmds) {
-			Log.d("%s = %s", cmd.getClass().getSimpleName(), cmd.isCommand(recv));
+		List<HipCmd> cmds = new ArrayList<>( Arrays.asList( commands ) );
+		Collections.sort( cmds, new HipCmdRelevanceComparator( recv ) );
+		for ( HipCmd cmd : cmds ) {
+			Log.d( "%s = %s", cmd.getClass().getSimpleName(), cmd.isCommand( recv ) );
 		}
 
-		CmdResponse<Void> result = cmds.get(0).executeCommand(this, recv); // FIXME should I deal with error result or let the cmd do it? hmmmm...
+		CmdResponse<Void> result = cmds.get( 0 ).executeCommand( this, recv ); // FIXME should I deal with error result or let the cmd do it? hmmmm...
 	}
 }

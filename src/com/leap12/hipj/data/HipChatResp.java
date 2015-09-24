@@ -8,16 +8,16 @@ import com.leap12.common.HttpResponse.HttpStatusCode;
 public class HipChatResp {
 	private final transient HipChatRecv mRecv;
 
-	@SerializedName("color")
+	@SerializedName( "color" )
 	private String mColor = "green";
-	@SerializedName("message")
+	@SerializedName( "message" )
 	private String mMessage = "";
-	@SerializedName("notify")
+	@SerializedName( "notify" )
 	private final boolean mNotify = false;
-	@SerializedName("message_format")
+	@SerializedName( "message_format" )
 	private final String mFormat = "text";
 
-	public HipChatResp(HipChatRecv recv) {
+	public HipChatResp( HipChatRecv recv ) {
 		this.mRecv = recv;
 	}
 
@@ -25,7 +25,7 @@ public class HipChatResp {
 		return mColor;
 	}
 
-	public void setColor(String color) {
+	public void setColor( String color ) {
 		mColor = color;
 	}
 
@@ -33,20 +33,20 @@ public class HipChatResp {
 		return mMessage;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage( String message ) {
 		mMessage = message;
 	}
 
 	@Override
 	public String toString() {
-		return HDao.gson().toJson(this);
+		return HDao.gson().toJson( this );
 	}
 
 	public String respond() {
 		HttpResponse resp = new HttpResponse();
-		resp.setStatusCode(HttpStatusCode.CODE_200);
-		resp.addHeader("Content-Type", "application/json;charset=ISO-8859-1");
-		resp.setBody(toString());
+		resp.setStatusCode( HttpStatusCode.CODE_200 );
+		resp.addHeader( "Content-Type", "application/json;charset=ISO-8859-1" );
+		resp.setBody( toString() );
 		return resp.toString();
 	}
 

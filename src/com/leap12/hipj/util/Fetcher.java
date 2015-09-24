@@ -13,19 +13,19 @@ public class Fetcher {
 
 	public Fetcher() {
 		OkHttpClient client = new OkHttpClient();
-		mFactory = new OkUrlFactory(client);
+		mFactory = new OkUrlFactory( client );
 	}
 
-	public String fetch(String urlString) throws Exception {
+	public String fetch( String urlString ) throws Exception {
 		InputStream iStream = null;
 		try {
-			URL url = URI.create(urlString).toURL();
-			HttpURLConnection conn = mFactory.open(url);
+			URL url = URI.create( urlString ).toURL();
+			HttpURLConnection conn = mFactory.open( url );
 			iStream = conn.getInputStream();
-			String in = StrUtl.toString(iStream);
+			String in = StrUtl.toString( iStream );
 			return in;
 		} finally {
-			if (iStream != null) {
+			if ( iStream != null ) {
 				iStream.close();
 			}
 		}

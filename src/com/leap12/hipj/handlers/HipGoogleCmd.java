@@ -14,28 +14,28 @@ public class HipGoogleCmd extends HipCmd {
 	}
 
 	@Override
-	public CmdResponse<Void> executeCommand(BaseConnectionDelegate connection, HipChatRecv recv) {
+	public CmdResponse<Void> executeCommand( BaseConnectionDelegate connection, HipChatRecv recv ) {
 		try {
-			HipChatResp resp = new HipChatResp(recv);
+			HipChatResp resp = new HipChatResp( recv );
 			Fetcher fetcher = new Fetcher();
-			String msg = fetcher.fetch("https://en.wikipedia.org/w/api.php?format=json&action=query&titles=India&prop=revisions&rvprop=content");
-			resp.setMessage(msg);
-			connection.writeMsg(resp.respond());
-			return new CmdResponse<Void>(Void.class, null, RequestStatus.SUCCESS);
-		} catch (Exception e) {
-			return new CmdResponse<Void>(Void.class, null, RequestStatus.FAIL_UNKNOWN);
+			String msg = fetcher.fetch( "https://en.wikipedia.org/w/api.php?format=json&action=query&titles=India&prop=revisions&rvprop=content" );
+			resp.setMessage( msg );
+			connection.writeMsg( resp.respond() );
+			return new CmdResponse<Void>( Void.class, null, RequestStatus.SUCCESS );
+		} catch ( Exception e ) {
+			return new CmdResponse<Void>( Void.class, null, RequestStatus.FAIL_UNKNOWN );
 		}
 	}
 
 	@Override
-	public float isCommand(HipChatRecv recv) {
-		return computeRelevance(recv);
+	public float isCommand( HipChatRecv recv ) {
+		return computeRelevance( recv );
 	}
 
-	private float computeRelevance(HipChatRecv recv) {
+	private float computeRelevance( HipChatRecv recv ) {
 		String msg = recv.getMessageBodyNoCmd().toLowerCase();
 		float out = 0.0f;
-		if (msg.startsWith("google")) {
+		if ( msg.startsWith( "google" ) ) {
 			out += 1.0f;
 		}
 		return out;

@@ -5,16 +5,16 @@ import com.leap12.common.StrUtl;
 
 public class HipChatRecv {
 
-	@SerializedName("event")
+	@SerializedName( "event" )
 	private String event;
 
-	@SerializedName("oauth_client_id")
+	@SerializedName( "oauth_client_id" )
 	private String oauthClientId;
 
-	@SerializedName("webhook_id")
+	@SerializedName( "webhook_id" )
 	private String webHookId;
 
-	@SerializedName("item")
+	@SerializedName( "item" )
 	private MsgItem item;
 
 	public String getEvent() {
@@ -63,9 +63,9 @@ public class HipChatRecv {
 
 	public String getMessageBodyNoCmd() {
 		String out = getMessageBody();
-		if (StrUtl.isNotEmpty(out)) {
-			String[] parts = out.split(" ", 2);
-			if (parts.length == 2) {
+		if ( StrUtl.isNotEmpty( out ) ) {
+			String[] parts = out.split( " ", 2 );
+			if ( parts.length == 2 ) {
 				return parts[1];
 			}
 		}
@@ -92,10 +92,12 @@ public class HipChatRecv {
 		return getSenderData().getName();
 	}
 
+
+
 	public static class MsgItem {
-		@SerializedName("message")
+		@SerializedName( "message" )
 		private HipChatMessage message;
-		@SerializedName("room")
+		@SerializedName( "room" )
 		private HipChatEntity room;
 
 		public HipChatMessage getMessage() {
@@ -108,8 +110,10 @@ public class HipChatRecv {
 
 	}
 
+
+
 	public static class HipChatUser extends HipChatEntity {
-		@SerializedName("mention_name")
+		@SerializedName( "mention_name" )
 		private String mentionName;
 
 		public String getMentionName() {
@@ -117,12 +121,14 @@ public class HipChatRecv {
 		}
 	}
 
+
+
 	public static class HipChatLinks {
-		@SerializedName("self")
+		@SerializedName( "self" )
 		private String self;
-		@SerializedName("participants")
+		@SerializedName( "participants" )
 		private String participants;
-		@SerializedName("webhooks")
+		@SerializedName( "webhooks" )
 		private String webhooks;
 
 		public String getSelf() {
@@ -138,21 +144,23 @@ public class HipChatRecv {
 		}
 	}
 
+
+
 	public static class HipChatMessage {
 
-		@SerializedName("id")
+		@SerializedName( "id" )
 		private String id;
 
-		@SerializedName("type")
+		@SerializedName( "type" )
 		private String type;
 
-		@SerializedName("message")
+		@SerializedName( "message" )
 		private String message;
 
-		@SerializedName("date")
+		@SerializedName( "date" )
 		private String date;
 
-		@SerializedName("from")
+		@SerializedName( "from" )
 		private HipChatUser from;
 
 		// FIXME: mentions
@@ -178,17 +186,19 @@ public class HipChatRecv {
 		}
 	}
 
+
+
 	public static class HipChatEntity {
-		@SerializedName("id")
+		@SerializedName( "id" )
 		private String id;
 
-		@SerializedName("links")
+		@SerializedName( "links" )
 		private HipChatLinks links;
 
-		@SerializedName("name")
+		@SerializedName( "name" )
 		private String name;
 
-		@SerializedName("version")
+		@SerializedName( "version" )
 		private String version;
 
 		public String getId() {

@@ -12,17 +12,17 @@ public class HipCmd extends Command<HipChatRecv, Void> {
 	public static class HipCmdRelevanceComparator implements Comparator<HipCmd> {
 		private final HipChatRecv mRecv;
 
-		public HipCmdRelevanceComparator(HipChatRecv recv) {
+		public HipCmdRelevanceComparator( HipChatRecv recv ) {
 			this.mRecv = recv;
 		}
 
 		@Override
-		public int compare(HipCmd a, HipCmd b) {
-			float aRelevance = a.isCommand(mRecv);
-			float bRelevance = b.isCommand(mRecv);
-			if (aRelevance > bRelevance) {
+		public int compare( HipCmd a, HipCmd b ) {
+			float aRelevance = a.isCommand( mRecv );
+			float bRelevance = b.isCommand( mRecv );
+			if ( aRelevance > bRelevance ) {
 				return -1;
-			} else if (aRelevance < bRelevance) {
+			} else if ( aRelevance < bRelevance ) {
 				return 1;
 			}
 			return 0;
@@ -30,23 +30,23 @@ public class HipCmd extends Command<HipChatRecv, Void> {
 	}
 
 	public HipCmd() {
-		super(Void.class);
+		super( Void.class );
 	}
 
 	@Override
-	public CmdResponse<Void> executeCommand(BaseConnectionDelegate connection, HipChatRecv recv) {
+	public CmdResponse<Void> executeCommand( BaseConnectionDelegate connection, HipChatRecv recv ) {
 		try {
-			HipChatResp resp = new HipChatResp(recv);
-			resp.setMessage("You typed: " + recv.getMessageBodyNoCmd());
-			connection.writeMsg(resp.respond());
-			return new CmdResponse<Void>(Void.class, null, RequestStatus.SUCCESS);
-		} catch (Exception e) {
-			return new CmdResponse<Void>(Void.class, null, RequestStatus.FAIL_UNKNOWN);
+			HipChatResp resp = new HipChatResp( recv );
+			resp.setMessage( "You typed: " + recv.getMessageBodyNoCmd() );
+			connection.writeMsg( resp.respond() );
+			return new CmdResponse<Void>( Void.class, null, RequestStatus.SUCCESS );
+		} catch ( Exception e ) {
+			return new CmdResponse<Void>( Void.class, null, RequestStatus.FAIL_UNKNOWN );
 		}
 	}
 
 	@Override
-	public float isCommand(HipChatRecv recv) {
+	public float isCommand( HipChatRecv recv ) {
 		return 0.01f; // always the least likely command.
 	}
 }
