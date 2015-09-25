@@ -1,15 +1,16 @@
-package com.leap12.hipj.handlers;
+package com.leap12.hipj.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import com.leap12.common.Log;
 import com.leap12.common.SendMail;
 import com.leap12.databuddy.BaseConnectionDelegate;
 import com.leap12.databuddy.Commands.CmdResponse;
-import com.leap12.databuddy.Commands.RequestStatus;
+import com.leap12.databuddy.Commands.CmdResponse.CmdResponseMutable;
 import com.leap12.hipj.data.HipChatRecv;
 import com.leap12.hipj.data.HipChatResp;
 
@@ -56,7 +57,7 @@ public class HipMailCmd extends HipCmd {
 			}
 
 			connection.writeMsg( resp.respond() );
-			return new CmdResponse<Void>( Void.class, null, RequestStatus.SUCCESS );
+			return new CmdResponseMutable<Void>( Void.class );
 		} catch ( Exception e ) {
 			try {
 				resp.setMessage( "Error: " + e.getMessage() + "\n"
@@ -65,7 +66,7 @@ public class HipMailCmd extends HipCmd {
 			} catch ( Exception e2 ) {
 				Log.e( e2 );
 			}
-			return new CmdResponse<Void>( Void.class, null, RequestStatus.FAIL_UNKNOWN, e );
+			return new CmdResponseMutable<Void>( Void.class, e );
 		}
 	}
 

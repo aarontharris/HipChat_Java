@@ -1,15 +1,15 @@
-package com.leap12.hipj.handlers;
+package com.leap12.hipj.commands;
 
-import java.util.Date;
 import com.leap12.databuddy.BaseConnectionDelegate;
 import com.leap12.databuddy.Commands.CmdResponse;
-import com.leap12.databuddy.Commands.RequestStatus;
+import com.leap12.databuddy.Commands.CmdResponse.CmdResponseMutable;
 import com.leap12.hipj.data.HipChatRecv;
 import com.leap12.hipj.data.HipChatResp;
+import com.leap12.hipj.util.Fetcher;
 
-public class HipTimeCmd extends HipCmd {
+public class HipGoogleCmd extends HipCmd {
 
-	public HipTimeCmd() {
+	public HipGoogleCmd() {
 		super();
 	}
 
@@ -17,11 +17,13 @@ public class HipTimeCmd extends HipCmd {
 	public CmdResponse<Void> executeCommand( BaseConnectionDelegate connection, HipChatRecv recv ) {
 		try {
 			HipChatResp resp = new HipChatResp( recv );
-			resp.setMessage( new Date().toString() );
+			Fetcher fetcher = new Fetcher();
+			String msg = fetcher.fetch( "https://en.wikipedia.org/w/api.php?format=json&action=query&titles=India&prop=revisions&rvprop=content" );
+			resp.setMessage( msg );
 			connection.writeMsg( resp.respond() );
-			return new CmdResponse<Void>( Void.class, null, RequestStatus.SUCCESS );
+			return new CmdResponseMutable<Void>( Void.class );
 		} catch ( Exception e ) {
-			return new CmdResponse<Void>( Void.class, null, RequestStatus.FAIL_UNKNOWN );
+			return new CmdResponseMutable<Void>( Void.class, e );
 		}
 	}
 
@@ -33,16 +35,8 @@ public class HipTimeCmd extends HipCmd {
 	private float computeRelevance( HipChatRecv recv ) {
 		String msg = recv.getMessageBodyNoCmd().toLowerCase();
 		float out = 0.0f;
-		if ( msg.equals( "what time is it" ) ) {
+		if ( msg.startsWith( "google" ) ) {
 			out += 1.0f;
-		} else if ( msg.contains( "time" ) || msg.contains( "hour" ) ) {
-			out += 0.5f;
-			if ( msg.contains( "what" ) ) {
-				out += 0.2f;
-			}
-			if ( msg.contains( "is" ) ) {
-				out += 0.1f;
-			}
 		}
 		return out;
 	}

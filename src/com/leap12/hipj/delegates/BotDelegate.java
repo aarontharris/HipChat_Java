@@ -4,23 +4,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import com.leap12.common.Log;
 import com.leap12.databuddy.BaseConnectionDelegate;
 import com.leap12.databuddy.Commands.CmdResponse;
+import com.leap12.hipj.commands.HipCmd;
+import com.leap12.hipj.commands.HipCmd.HipCmdRelevanceComparator;
+import com.leap12.hipj.commands.HipGoogleCmd;
+import com.leap12.hipj.commands.HipMailCmd;
+import com.leap12.hipj.commands.HipTimeCmd;
 import com.leap12.hipj.data.HDao;
 import com.leap12.hipj.data.HipChatRecv;
-import com.leap12.hipj.handlers.HipCmd;
-import com.leap12.hipj.handlers.HipCmd.HipCmdRelevanceComparator;
-import com.leap12.hipj.handlers.HipGoogleCmd;
-import com.leap12.hipj.handlers.HipMailCmd;
-import com.leap12.hipj.handlers.HipTimeCmd;
 
 public class BotDelegate extends BaseConnectionDelegate {
-	private static final HipCmd[] commands = new HipCmd[] {
+	private static final HipCmd[] hipCommands = new HipCmd[] {
 			new HipTimeCmd(),
 			new HipCmd(),
 			new HipGoogleCmd(),
-			new HipMailCmd()
+			new HipMailCmd(),
 	};
 
 	@Override
@@ -31,12 +32,12 @@ public class BotDelegate extends BaseConnectionDelegate {
 		HDao hdao = new HDao();
 		HipChatRecv recv = hdao.toHipChatRecv( jsonPostData );
 
-		List<HipCmd> cmds = new ArrayList<>( Arrays.asList( commands ) );
+		List<HipCmd> cmds = new ArrayList<>( Arrays.asList( hipCommands ) );
 		Collections.sort( cmds, new HipCmdRelevanceComparator( recv ) );
 		for ( HipCmd cmd : cmds ) {
 			Log.d( "%s = %s", cmd.getClass().getSimpleName(), cmd.isCommand( recv ) );
 		}
 
-		CmdResponse<Void> result = cmds.get( 0 ).executeCommand( this, recv ); // FIXME should I deal with error result or let the cmd do it? hmmmm...
+		CmdResponse<Void> result = cmds.get( 0 ).executeCommand( this, recv ); // cmd should deal with the error
 	}
 }

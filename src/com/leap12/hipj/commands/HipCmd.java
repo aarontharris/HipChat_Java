@@ -1,10 +1,11 @@
-package com.leap12.hipj.handlers;
+package com.leap12.hipj.commands;
 
 import java.util.Comparator;
+
 import com.leap12.databuddy.BaseConnectionDelegate;
 import com.leap12.databuddy.Commands.CmdResponse;
+import com.leap12.databuddy.Commands.CmdResponse.CmdResponseMutable;
 import com.leap12.databuddy.Commands.Command;
-import com.leap12.databuddy.Commands.RequestStatus;
 import com.leap12.hipj.data.HipChatRecv;
 import com.leap12.hipj.data.HipChatResp;
 
@@ -39,9 +40,9 @@ public class HipCmd extends Command<HipChatRecv, Void> {
 			HipChatResp resp = new HipChatResp( recv );
 			resp.setMessage( "You typed: " + recv.getMessageBodyNoCmd() );
 			connection.writeMsg( resp.respond() );
-			return new CmdResponse<Void>( Void.class, null, RequestStatus.SUCCESS );
+			return new CmdResponseMutable<Void>( Void.class );
 		} catch ( Exception e ) {
-			return new CmdResponse<Void>( Void.class, null, RequestStatus.FAIL_UNKNOWN );
+			return new CmdResponseMutable<Void>( Void.class, e );
 		}
 	}
 
