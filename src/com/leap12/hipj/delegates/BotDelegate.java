@@ -24,6 +24,10 @@ public class BotDelegate extends BaseConnectionDelegate {
 			new HipMailCmd(),
 	};
 
+	public static boolean isBotDelegate( String msg ) {
+		throw new UnsupportedOperationException(); // FIXME
+	}
+
 	@Override
 	protected void onReceivedMsg( String msg ) throws Exception {
 		String parts[] = msg.split( "\r\n\r\n", 2 );
